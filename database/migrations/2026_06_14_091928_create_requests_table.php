@@ -10,18 +10,24 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('requests', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('requests', function (Blueprint $table) {
+        $table->id();
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('requests');
-    }
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->foreignId('item_id')->constrained()->onDelete('cascade');
+
+        $table->date('start_date')->nullable();
+        $table->date('end_date')->nullable();
+        $table->text('message')->nullable();
+        $table->string('status', 50)->default('pending');
+
+        $table->timestamps();
+    });
+}
+
+public function down(): void
+{
+    Schema::dropIfExists('requests');
+}
 };
