@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ItemController;
 
 Route::get('/', function () {
     return view('home');
@@ -24,3 +25,7 @@ Route::post('/login', [AuthController::class, 'login'])
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
+
+Route::resource('items', ItemController::class)
+    ->middleware(['create' => 'auth', 'store' => 'auth', 
+    'edit' => 'auth', 'update' => 'auth', 'destroy' => 'auth']);

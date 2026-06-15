@@ -12,8 +12,8 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="{{ route('home') }}">
-            Lietu apmaiņa un īre
+        <a class="navbar-brand" href="{{ route('items.index') }}">
+        Lietu apmaiņa un īre
         </a>
 
         <div class="d-flex gap-2">
@@ -27,23 +27,29 @@
                 </a>
             @endguest
 
-            @auth
-                <span class="navbar-text text-white">
-                    {{ auth()->user()->name }}
-                    @if(auth()->user()->isAdmin())
-                        (Admin)
-                    @else
-                        (Lietotājs)
-                    @endif
-                </span>
+    @auth
 
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">
-                        Iziet
-                    </button>
-                </form>
-            @endauth
+        <a href="{{ route('items.create') }}" class="btn btn-success">
+            Pievienot lietu
+        </a>
+
+        <span class="navbar-text text-white">
+            {{ auth()->user()->name }}
+            @if(auth()->user()->isAdmin())
+                (Admin)
+            @else
+                (Lietotājs)
+            @endif
+        </span>
+
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-danger">
+                Iziet
+            </button>
+        </form>
+
+    @endauth
         </div>
     </div>
 </nav>
