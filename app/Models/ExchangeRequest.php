@@ -11,6 +11,7 @@ class ExchangeRequest extends Model
     protected $fillable = [
         'user_id',
         'item_id',
+        'offered_item_id',
         'start_date',
         'end_date',
         'message',
@@ -30,6 +31,11 @@ class ExchangeRequest extends Model
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function offeredItem()
+    {
+        return $this->belongsTo(Item::class, 'offered_item_id');
     }
 
     public function reviews()

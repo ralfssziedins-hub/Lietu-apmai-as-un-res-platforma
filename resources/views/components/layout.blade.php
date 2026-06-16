@@ -49,6 +49,10 @@
             </button>
         </form>
 
+        <a href="{{ route('requests.incoming') }}" class="btn btn-outline-light">
+            Pieprasījumi
+        </a>
+
     @endauth
         </div>
     </div>

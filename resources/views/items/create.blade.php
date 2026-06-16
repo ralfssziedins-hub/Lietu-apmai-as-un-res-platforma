@@ -26,7 +26,7 @@
 
         <input type="hidden" name="status" value="available">
 
-        <div class="mb-3">
+        <div class="mb-3" id="price-field">
             <label class="form-label">Cena</label>
             <input type="number" step="0.01" name="price" class="form-control" value="{{ old('price') }}">
         </div>
@@ -46,4 +46,25 @@
             Saglabāt
         </button>
     </form>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+            const typeSelect = document.querySelector('[name="type"]');
+            const priceField = document.getElementById('price-field');
+
+            function togglePrice()
+            {
+                if (typeSelect.value === 'exchange') {
+                    priceField.style.display = 'none';
+                } else {
+                    priceField.style.display = 'block';
+                }
+            }
+
+            togglePrice();
+
+            typeSelect.addEventListener('change', togglePrice);
+        });
+    </script>
+
 </x-layout>

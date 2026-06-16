@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ExchangeRequestController;
 
 Route::get('/', function () {
     return view('home');
@@ -29,3 +30,20 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::resource('items', ItemController::class)
     ->middleware(['create' => 'auth', 'store' => 'auth', 
     'edit' => 'auth', 'update' => 'auth', 'destroy' => 'auth']);
+    
+Route::middleware('auth')->group(function () {
+    Route::get('/items/{item}/request', [ExchangeRequestController::class, 'create'])
+        ->name('requests.create');
+
+    Route::post('/items/{item}/request', [ExchangeRequestController::class, 'store'])
+        ->name('requests.store');
+
+    Route::get('/requests/incoming', [ExchangeRequestController::class, 'incoming'])
+        ->name('requests.incoming');
+
+    Route::post('/requests/{requestModel}/approve', [ExchangeRequestController::class, 'approve'])
+        ->name('requests.approve');
+
+    Route::post('/requests/{requestModel}/reject', [ExchangeRequestController::class, 'reject'])
+        ->name('requests.reject');
+});
