@@ -10,12 +10,34 @@ use Illuminate\Support\Facades\Auth;
 class ItemController extends Controller
 {
 
-    public function index()
-    {
-        $items = Item::with(['category', 'user'])->latest()->get();
+    public function index(Request $request)
+{
+        $query = Item::with(['category', 'user']);
 
-        return view('items.index', compact('items'));
-    }
+        if ($request->filled('search')) {
+
+            $query->where(function ($q) use ($request) {
+
+                $q->where('title','like','%'.$request->search.'%')
+                ->orWhere('description','like','%'.$request->search.'%');
+
+            });
+        }
+
+        if ($request->filled('category')) {
+
+            $query->where('category_id', $request->category);
+        }
+
+        $items = $query->latest()->get();
+
+        $categories = Category::all();
+
+        return view('items.index', compact(
+            'items',
+            'categories'
+        ));
+}
 
     public function create()
     {
