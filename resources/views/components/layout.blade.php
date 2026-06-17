@@ -53,6 +53,13 @@
             Pieprasījumi
         </a>
 
+        <a href="{{ route('requests.my') }}" class="btn btn-outline-light">
+            Mani pieprasījumi
+        </a>
+
+        <a href="{{ route('profile') }}" class="btn btn-outline-light">
+            Mans profils
+        </a>
     @endauth
         </div>
     </div>

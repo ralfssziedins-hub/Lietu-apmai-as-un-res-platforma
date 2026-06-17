@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ExchangeRequestController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('home');
@@ -46,4 +48,19 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/requests/{requestModel}/reject', [ExchangeRequestController::class, 'reject'])
         ->name('requests.reject');
+    
+    Route::get('/requests/{requestModel}/review/create',
+    [ReviewController::class, 'create'])
+    ->name('reviews.create');
+
+    Route::post('/requests/{requestModel}/review',
+    [ReviewController::class, 'store'])
+    ->name('reviews.store');
+
+    Route::get('/requests/my', [ExchangeRequestController::class, 'myRequests'])
+    ->name('requests.my');
+
+    Route::get('/profile', [ProfileController::class, 'show'])
+    ->middleware('auth')
+    ->name('profile');
 });

@@ -100,4 +100,13 @@ class ExchangeRequestController extends Controller
         return redirect()->route('requests.incoming')
             ->with('success', 'Pieprasījums noraidīts.');
     }
+    public function myRequests()
+    {
+        $requests = ExchangeRequest::with(['item', 'item.user', 'offeredItem'])
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->get();
+
+        return view('requests.my', compact('requests'));
+    }
 }
