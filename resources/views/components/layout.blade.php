@@ -82,6 +82,12 @@
         </div>
     @endif
 
+    @if(auth()->user()->isAdmin())
+    <a href="{{ route('admin.index') }}" class="btn btn-outline-warning">
+        Admin panelis
+    </a>
+    @endif
+
     {{ $slot }}
 </main>
 

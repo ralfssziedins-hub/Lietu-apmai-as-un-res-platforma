@@ -6,6 +6,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ExchangeRequestController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('home');
@@ -63,4 +64,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])
     ->middleware('auth')
     ->name('profile');
+    
+    Route::middleware('auth')->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])
+        ->name('admin.index');
+
+    Route::post('/admin/users/{user}/block', [AdminController::class, 'blockUser'])
+        ->name('admin.users.block');
+
+    Route::post('/admin/users/{user}/unblock', [AdminController::class, 'unblockUser'])
+        ->name('admin.users.unblock');
+});
 });
