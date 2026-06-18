@@ -5,7 +5,7 @@
 
     <h1>{{ __('messages.create_item') }}</h1>
 
-    <form method="POST" action="{{ route('items.store') }}">
+    <form method="POST" action="{{ route('items.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
@@ -71,7 +71,14 @@
                 @endforeach
             </select>
         </div>
-
+        <div class="mb-3">
+        <label class="form-label">
+            {{ __('messages.image') }}
+        </label>
+        <input type="file"
+            name="image"
+            class="form-control">
+        </div>
         <button type="submit" class="btn btn-primary">
             {{ __('messages.save') }}
         </button>

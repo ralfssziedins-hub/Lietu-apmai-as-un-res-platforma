@@ -85,4 +85,6 @@ return [
     'choose_your_item' => 'Izvēlies savu lietu',
     'message_to_owner' => 'Ziņa īpašniekam',
     'send' => 'Nosūtīt',
+    'image' => 'Attēls',
+    'delete_image' => 'Dzēst attēlu',
 ];

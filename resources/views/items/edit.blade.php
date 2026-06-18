@@ -3,7 +3,7 @@
 
     <h1>{{ __('messages.edit_item') }}</h1>
 
-    <form method="POST" action="{{ route('items.update', $item) }}">
+    <form method="POST" action="{{ route('items.update', $item) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -64,6 +64,34 @@
                     </option>
                 @endforeach
             </select>
+            </div>
+        @if($item->image)
+            <div class="mb-3">
+            <img src="{{ asset('storage/' . $item->image) }}"
+                alt="{{ $item->title }}"
+                style="max-width: 250px;">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox"
+                    name="delete_image"
+                    value="1"
+                    class="form-check-input"
+                    id="delete_image">
+
+                <label class="form-check-label" for="delete_image">
+                    {{ __('messages.delete_image') }}
+                </label>
+            </div>
+        @endif
+
+        <div class="mb-3">
+            <label class="form-label">
+                {{ __('messages.image') }}
+            </label>
+
+        <input type="file"
+            name="image"
+            class="form-control">
         </div>
 
         <button type="submit" class="btn btn-primary">

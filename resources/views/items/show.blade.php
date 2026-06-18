@@ -3,6 +3,14 @@
 
     <h1>{{ $item->title }}</h1>
 
+    @if($item->image)
+    <div class="mb-3">
+        <img src="{{ asset('storage/' . $item->image) }}"
+             alt="{{ $item->title }}"
+             style="max-width: 400px;">
+    </div>
+    @endif
+
     <p>{{ $item->description }}</p>
 
     <p><strong>{{ __('messages.category') }}:</strong> {{ $item->category->name }}</p>

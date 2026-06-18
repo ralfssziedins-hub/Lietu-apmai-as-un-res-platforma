@@ -85,4 +85,6 @@ return [
     'choose_your_item' => 'Choose your item',
     'message_to_owner' => 'Message to owner',
     'send' => 'Send',
+    'image' => 'Image',
+    'delete_image' => 'Delete image',
 ];

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -63,7 +64,12 @@ class ItemController extends Controller
             'status' => 'required|in:available,reserved,rented,exchanged',
             'price' => 'nullable|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('items', 'public');
+        }
 
         $validated['user_id'] = Auth::id();
 
@@ -102,7 +108,19 @@ class ItemController extends Controller
             'status' => 'required|in:available,reserved,rented,exchanged',
             'price' => 'nullable|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+        if ($request->has('delete_image') && $item->image) {
+            Storage::disk('public')->delete($item->image);
+            $validated['image'] = null;
+        }
+        if ($request->hasFile('image')) {
+            if ($item->image) {
+                Storage::disk('public')->delete($item->image);
+            }
+
+            $validated['image'] = $request->file('image')->store('items', 'public');
+        }
 
         $item->update($validated);
 
@@ -114,6 +132,10 @@ class ItemController extends Controller
     {
         if (! Auth::user()->isAdmin() && Auth::id() !== $item->user_id) {
             abort(403);
+        }
+
+        if ($item->image) {
+            Storage::disk('public')->delete($item->image);
         }
 
         $item->delete();

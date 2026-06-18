@@ -13,7 +13,8 @@ class Item extends Model
         'status',
         'price',
         'user_id',
-        'category_id'
+        'category_id',
+        'image'
     ];
 
     public function category()

@@ -51,7 +51,12 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5>{{ $item->title }}</h5>
-
+                    @if($item->image)
+                        <img src="{{ asset('storage/' . $item->image) }}"
+                            alt="{{ $item->title }}"
+                            style="max-width: 200px;"
+                            class="mb-2">
+                    @endif
                     <p>{{ $item->description }}</p>
 
                     <p>
