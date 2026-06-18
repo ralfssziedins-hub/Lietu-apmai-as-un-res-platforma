@@ -4,7 +4,7 @@
     <h1>{{ __('messages.items') }}</h1>
 
     <form method="GET" action="{{ route('items.index') }}" class="mb-4">
-        <div class="row">
+        <div class="row g-2">
             <div class="col-md-5">
                 <input type="text"
                        name="search"
@@ -47,38 +47,49 @@
             {{ __('messages.no_results') }}
         </div>
     @else
-        @foreach($items as $item)
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5>{{ $item->title }}</h5>
-                    @if($item->image)
-                        <img src="{{ asset('storage/' . $item->image) }}"
-                            alt="{{ $item->title }}"
-                            style="max-width: 200px;"
-                            class="mb-2">
-                    @endif
-                    <p>{{ $item->description }}</p>
+        <div class="row">
+            @foreach($items as $item)
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100">
+                        @if($item->image)
+                            <img src="{{ asset('storage/' . $item->image) }}"
+                                 alt="{{ $item->title }}"
+                                 class="card-img-top"
+                                 style="height: 180px; width: 100%; object-fit: contain">
+                        @endif
 
-                    <p>
-                        <strong>{{ __('messages.category') }}:</strong>
-                        {{ $item->category->name }}
-                    </p>
+                        <div class="card-body d-flex flex-column">
+                            <h5>{{ $item->title }}</h5>
 
-                    <p>
-                        <strong>{{ __('messages.type') }}:</strong>
-                        {{ __('messages.'.$item->type) }}
-                    </p>
+                            <p>{{ Str::limit($item->description, 80) }}</p>
 
-                    <p>
-                        <strong>{{ __('messages.status') }}:</strong>
-                        {{ __('messages.'.$item->status) }}
-                    </p>
+                            <p>
+                                <strong>{{ __('messages.category') }}:</strong>
+                                {{ $item->category->name }}
+                            </p>
 
-                    <a href="{{ route('items.show', $item) }}" class="btn btn-primary">
-                        {{ __('messages.view') }}
-                    </a>
+                            <p>
+                                <strong>{{ __('messages.type') }}:</strong>
+                                {{ __('messages.' . $item->type) }}
+                            </p>
+
+                            <p>
+                                <strong>{{ __('messages.status') }}:</strong>
+                                {{ __('messages.' . $item->status) }}
+                            </p>
+
+                            <a href="{{ route('items.show', $item) }}"
+                               class="btn btn-primary mt-auto">
+                                {{ __('messages.view') }}
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
+
+        <div class="mt-4">
+            {{ $items->links() }}
+        </div>
     @endif
 </x-layout>

@@ -9,9 +9,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LanguageController;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [ItemController::class, 'index'])
+    ->name('home');
+
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])
+    ->name('language.switch');
 
 Route::get('/register', [AuthController::class, 'showRegister'])
     ->middleware('guest')
@@ -31,14 +33,26 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-Route::resource('items', ItemController::class)
-    ->middleware(['create' => 'auth', 'store' => 'auth', 
-    'edit' => 'auth', 'update' => 'auth', 'destroy' => 'auth']);
 
-    Route::get('/language/{locale}', [LanguageController::class, 'switch'])
-    ->name('language.switch');
-    
+Route::get('/items', [ItemController::class, 'index'])
+    ->name('items.index');
+
 Route::middleware('auth')->group(function () {
+    Route::get('/items/create', [ItemController::class, 'create'])
+        ->name('items.create');
+
+    Route::post('/items', [ItemController::class, 'store'])
+        ->name('items.store');
+
+    Route::get('/items/{item}/edit', [ItemController::class, 'edit'])
+        ->name('items.edit');
+
+    Route::put('/items/{item}', [ItemController::class, 'update'])
+        ->name('items.update');
+
+    Route::delete('/items/{item}', [ItemController::class, 'destroy'])
+        ->name('items.destroy');
+
     Route::get('/items/{item}/request', [ExchangeRequestController::class, 'create'])
         ->name('requests.create');
 
@@ -48,28 +62,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/requests/incoming', [ExchangeRequestController::class, 'incoming'])
         ->name('requests.incoming');
 
+    Route::get('/requests/my', [ExchangeRequestController::class, 'myRequests'])
+        ->name('requests.my');
+
     Route::post('/requests/{requestModel}/approve', [ExchangeRequestController::class, 'approve'])
         ->name('requests.approve');
 
     Route::post('/requests/{requestModel}/reject', [ExchangeRequestController::class, 'reject'])
         ->name('requests.reject');
-    
-    Route::get('/requests/{requestModel}/review/create',
-    [ReviewController::class, 'create'])
-    ->name('reviews.create');
 
-    Route::post('/requests/{requestModel}/review',
-    [ReviewController::class, 'store'])
-    ->name('reviews.store');
+    Route::get('/requests/{requestModel}/review/create', [ReviewController::class, 'create'])
+        ->name('reviews.create');
 
-    Route::get('/requests/my', [ExchangeRequestController::class, 'myRequests'])
-    ->name('requests.my');
+    Route::post('/requests/{requestModel}/review', [ReviewController::class, 'store'])
+        ->name('reviews.store');
 
     Route::get('/profile', [ProfileController::class, 'show'])
-    ->middleware('auth')
-    ->name('profile');
-    
-    Route::middleware('auth')->group(function () {
+        ->name('profile');
+
     Route::get('/admin', [AdminController::class, 'index'])
         ->name('admin.index');
 
@@ -79,4 +89,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/users/{user}/unblock', [AdminController::class, 'unblockUser'])
         ->name('admin.users.unblock');
 });
-});
+
+Route::get('/items/{item}', [ItemController::class, 'show'])
+    ->name('items.show');

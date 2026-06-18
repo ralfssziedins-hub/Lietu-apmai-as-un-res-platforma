@@ -14,6 +14,7 @@ class ItemController extends Controller
     public function index(Request $request)
 {
         $query = Item::with(['category', 'user']);
+        $query->where('status', 'available');
 
         if ($request->filled('search')) {
 
@@ -30,8 +31,9 @@ class ItemController extends Controller
             $query->where('category_id', $request->category);
         }
 
-        $items = $query->latest()->get();
-
+        $items = $query->latest()
+        ->paginate(6)
+        ->withQueryString();
         $categories = Category::all();
 
         return view('items.index', compact(

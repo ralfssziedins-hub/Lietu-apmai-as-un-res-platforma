@@ -13,7 +13,7 @@
             <div class="mb-3">
                 <label class="form-label">{{ __('messages.start_date') }}</label>
                 <input type="date" name="start_date" class="form-control"
-                       value="{{ old('start_date') }}">
+                        min="{{ date('Y-m-d') }}" value="{{ old('start_date') }}">
             </div>
 
             <div class="mb-3">
