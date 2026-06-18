@@ -36,11 +36,6 @@
         </div>
     </form>
 
-    @auth
-        <a href="{{ route('items.create') }}" class="btn btn-success mb-3">
-            {{ __('messages.create_item') }}
-        </a>
-    @endauth
 
     @if($items->isEmpty())
         <div class="alert alert-info">

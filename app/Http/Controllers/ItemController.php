@@ -64,11 +64,13 @@ class ItemController extends Controller
             'description' => 'required',
             'type' => 'required|in:rent,exchange',
             'status' => 'required|in:available,reserved,rented,exchanged',
-            'price' => 'nullable|numeric|min:0',
+            'price' => 'required_if:type,rent|nullable|numeric|min:0.01',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
-
+        if ($validated['type'] === 'exchange') {
+            $validated['price'] = null;
+        }
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('items', 'public');
         }
@@ -108,10 +110,14 @@ class ItemController extends Controller
             'description' => 'required',
             'type' => 'required|in:rent,exchange',
             'status' => 'required|in:available,reserved,rented,exchanged',
-            'price' => 'nullable|numeric|min:0',
+            'price' => 'required_if:type,rent|nullable|numeric|min:0.01',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($validated['type'] === 'exchange') {
+            $validated['price'] = null;
+        }
         if ($request->has('delete_image') && $item->image) {
             Storage::disk('public')->delete($item->image);
             $validated['image'] = null;
