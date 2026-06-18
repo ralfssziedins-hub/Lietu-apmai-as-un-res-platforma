@@ -1,24 +1,30 @@
 <x-layout>
+
     <x-slot name="title">
-        Sākums
+        {{ __('messages.home') }}
     </x-slot>
 
-    <h1>Lietu apmaiņas un īres platforma</h1>
+    <h1>{{ __('messages.home_title') }}</h1>
 
     <p>
-        Šeit lietotāji varēs piedāvāt lietas īrei vai apmaiņai.
+        {{ __('messages.home_description') }}
     </p>
 
     @guest
+
         <p>
-            Lai pievienotu savas lietas vai nosūtītu pieprasījumus,
-            lūdzu pieslēdzies vai reģistrējies.
+            {{ __('messages.home_guest_text') }}
         </p>
+
     @endguest
 
     @auth
+
         <p>
-            Tu esi pieslēdzies kā {{ auth()->user()->name }}.
+            {{ __('messages.logged_in_as') }}
+            {{ auth()->user()->name }}
         </p>
+
     @endauth
+
 </x-layout>

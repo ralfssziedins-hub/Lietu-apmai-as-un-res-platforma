@@ -9,7 +9,7 @@
         @csrf
 
         <div class="mb-3">
-            <label class="form-label">Vārds</label>
+            <label class="form-label">{{ __('messages.full_name') }}</label>
             <input type="text"
                    name="name"
                    class="form-control"
@@ -18,7 +18,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">E-pasts</label>
+            <label class="form-label">{{ __('messages.email') }}</label>
             <input type="email"
                    name="email"
                    class="form-control"
@@ -27,7 +27,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Parole</label>
+            <label class="form-label">{{ __('messages.password') }}</label>
             <input type="password"
                    name="password"
                    class="form-control"
@@ -35,7 +35,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Atkārtot paroli</label>
+            <label class="form-label">{{ __('messages.password_confirmation') }}</label>
             <input type="password"
                    name="password_confirmation"
                    class="form-control"
@@ -43,7 +43,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">
-            Reģistrēties
+            {{ __('messages.register') }}
         </button>
     </form>
 </x-layout>

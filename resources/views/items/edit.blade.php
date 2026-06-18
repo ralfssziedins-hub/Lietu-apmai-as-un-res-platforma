@@ -1,61 +1,61 @@
 <x-layout>
-    <x-slot name="title">Rediģēt lietu</x-slot>
+    <x-slot name="title">{{ __('messages.edit_item') }}</x-slot>
 
-    <h1>Rediģēt lietu</h1>
+    <h1>{{ __('messages.edit_item') }}</h1>
 
     <form method="POST" action="{{ route('items.update', $item) }}">
         @csrf
         @method('PUT')
 
         <div class="mb-3">
-            <label class="form-label">Nosaukums</label>
+            <label class="form-label">{{ __('messages.title') }}</label>
             <input type="text" name="title" class="form-control"
                    value="{{ old('title', $item->title) }}">
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Apraksts</label>
+            <label class="form-label">{{ __('messages.description') }}</label>
             <textarea name="description" class="form-control">{{ old('description', $item->description) }}</textarea>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Veids</label>
+            <label class="form-label">{{ __('messages.type') }}</label>
             <select name="type" class="form-select">
                 <option value="rent" {{ old('type', $item->type) === 'rent' ? 'selected' : '' }}>
-                    Īre
+                    {{ __('messages.rent') }}
                 </option>
                 <option value="exchange" {{ old('type', $item->type) === 'exchange' ? 'selected' : '' }}>
-                    Apmaiņa
+                    {{ __('messages.exchange') }}
                 </option>
             </select>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Statuss</label>
+            <label class="form-label">{{ __('messages.status') }}</label>
             <select name="status" class="form-select">
                 <option value="available" {{ old('status', $item->status) === 'available' ? 'selected' : '' }}>
-                    Pieejama
+                    {{ __('messages.available') }}
                 </option>
                 <option value="reserved" {{ old('status', $item->status) === 'reserved' ? 'selected' : '' }}>
-                    Rezervēta
+                    {{ __('messages.reserved') }}
                 </option>
                 <option value="rented" {{ old('status', $item->status) === 'rented' ? 'selected' : '' }}>
-                    Iznomāta
+                    {{ __('messages.rented') }}
                 </option>
                 <option value="exchanged" {{ old('status', $item->status) === 'exchanged' ? 'selected' : '' }}>
-                    Apmainīta
+                    {{ __('messages.exchanged') }}
                 </option>
             </select>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Cena</label>
+        <div class="mb-3" id="price-field">
+            <label class="form-label">{{ __('messages.price') }}</label>
             <input type="number" step="0.01" name="price" class="form-control"
                    value="{{ old('price', $item->price) }}">
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Kategorija</label>
+            <label class="form-label">{{ __('messages.category') }}</label>
             <select name="category_id" class="form-select">
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}"
@@ -67,7 +67,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">
-            Saglabāt izmaiņas
+            {{ __('messages.save_changes') }}
         </button>
     </form>
 </x-layout>

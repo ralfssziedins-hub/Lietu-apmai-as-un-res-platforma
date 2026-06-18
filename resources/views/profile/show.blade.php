@@ -1,59 +1,62 @@
 <x-layout>
     <x-slot name="title">
-        Mans profils
+        {{ __('messages.profile') }}
     </x-slot>
 
-    <h1>Mans profils</h1>
+    <h1>{{ __('messages.profile') }}</h1>
 
-    <p><strong>Vārds:</strong> {{ $user->name }}</p>
-    <p><strong>E-pasts:</strong> {{ $user->email }}</p>
-    <p><strong>Loma:</strong> {{ $user->role }}</p>
+    <p><strong>{{ __('messages.name') }}:</strong> {{ $user->name }}</p>
+    <p><strong>{{ __('messages.email') }}:</strong> {{ $user->email }}</p>
+    <p><strong>{{ __('messages.role') }}:</strong> {{ $user->role }}</p>
 
-    <h2>Manas lietas</h2>
+    <h2>{{ __('messages.my_items') }}</h2>
 
     @if($items->isEmpty())
-        <p>Tev vēl nav pievienotu lietu.</p>
+        <p>{{ __('messages.no_items') }}</p>
     @else
         @foreach($items as $item)
             <div class="card mb-3">
                 <div class="card-body">
                     <h5>{{ $item->title }}</h5>
                     <p>{{ $item->description }}</p>
+
                     <a href="{{ route('items.show', $item) }}" class="btn btn-primary">
-                        Skatīt
+                        {{ __('messages.view') }}
                     </a>
                 </div>
             </div>
         @endforeach
     @endif
 
-    <h2>Saņemtās atsauksmes</h2>
+    <h2>{{ __('messages.received_reviews') }}</h2>
 
     @if($receivedReviews->isEmpty())
-        <p>Tev vēl nav atsauksmju.</p>
+        <p>{{ __('messages.no_reviews') }}</p>
     @else
         @foreach($receivedReviews as $review)
             <div class="card mb-3">
                 <div class="card-body">
+
                     <p>
-                        <strong>Vērtējums:</strong>
+                        <strong>{{ __('messages.rating') }}:</strong>
                         {{ $review->rating }}/5
                     </p>
 
                     <p>
-                        <strong>Atsauksme:</strong>
+                        <strong>{{ __('messages.review') }}:</strong>
                         {{ $review->text }}
                     </p>
 
                     <p>
-                        <strong>Autors:</strong>
+                        <strong>{{ __('messages.author') }}:</strong>
                         {{ $review->author->name }}
                     </p>
 
                     <p>
-                        <strong>Par lietu:</strong>
+                        <strong>{{ __('messages.for_item') }}:</strong>
                         {{ $review->request->item->title }}
                     </p>
+
                 </div>
             </div>
         @endforeach

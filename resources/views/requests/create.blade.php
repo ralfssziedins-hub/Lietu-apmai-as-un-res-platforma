@@ -1,23 +1,23 @@
 <x-layout>
-    <x-slot name="title">Nosūtīt pieprasījumu</x-slot>
+    <x-slot name="title">{{ __('messages.send_request') }}</x-slot>
 
-    <h1>Nosūtīt pieprasījumu</h1>
+    <h1>{{ __('messages.send_request') }}</h1>
 
-    <p><strong>Lieta:</strong> {{ $item->title }}</p>
-    <p><strong>Veids:</strong> {{ $item->type }}</p>
+    <p><strong>{{ __('messages.item') }}:</strong> {{ $item->title }}</p>
+    <p><strong>{{ __('messages.type') }}:</strong> {{ __('messages.' . $item->type) }}</p>
 
     <form method="POST" action="{{ route('requests.store', $item) }}">
         @csrf
 
         @if($item->type === 'rent')
             <div class="mb-3">
-                <label class="form-label">Sākuma datums</label>
+                <label class="form-label">{{ __('messages.start_date') }}</label>
                 <input type="date" name="start_date" class="form-control"
                        value="{{ old('start_date') }}">
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Beigu datums</label>
+                <label class="form-label">{{ __('messages.end_date') }}</label>
                 <input type="date" name="end_date" class="form-control"
                        value="{{ old('end_date') }}">
             </div>
@@ -25,9 +25,9 @@
 
         @if($item->type === 'exchange')
             <div class="mb-3">
-                <label class="form-label">Ko piedāvā apmaiņā?</label>
+                <label class="form-label">{{ __('messages.what_offer_exchange') }}</label>
                 <select name="offered_item_id" class="form-select">
-                    <option value="">Izvēlies savu lietu</option>
+                    <option value="">{{ __('messages.choose_your_item') }}</option>
                     @foreach($myItems as $myItem)
                         <option value="{{ $myItem->id }}">
                             {{ $myItem->title }}
@@ -38,12 +38,12 @@
         @endif
 
         <div class="mb-3">
-            <label class="form-label">Ziņa īpašniekam</label>
+            <label class="form-label">{{ __('messages.message_to_owner') }}</label>
             <textarea name="message" class="form-control">{{ old('message') }}</textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">
-            Nosūtīt
+            {{ __('messages.send') }}
         </button>
     </form>
 </x-layout>

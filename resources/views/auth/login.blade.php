@@ -3,13 +3,13 @@
         Pieslēgšanās
     </x-slot>
 
-    <h1>Pieslēgšanās</h1>
+    <h1>{{ __('messages.login_title') }}</h1>
 
     <form action="{{ route('login') }}" method="POST">
         @csrf
 
         <div class="mb-3">
-            <label class="form-label">E-pasts</label>
+            <label class="form-label">{{ __('messages.email') }}</label>
             <input type="email"
                    name="email"
                    class="form-control"
@@ -18,7 +18,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Parole</label>
+            <label class="form-label">{{ __('messages.password') }}</label>
             <input type="password"
                    name="password"
                    class="form-control"
@@ -26,7 +26,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">
-            Pieslēgties
+            {{ __('messages.login') }}
         </button>
     </form>
 </x-layout>

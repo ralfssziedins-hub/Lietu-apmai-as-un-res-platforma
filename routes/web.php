@@ -7,6 +7,7 @@ use App\Http\Controllers\ExchangeRequestController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LanguageController;
 
 Route::get('/', function () {
     return view('home');
@@ -33,6 +34,9 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::resource('items', ItemController::class)
     ->middleware(['create' => 'auth', 'store' => 'auth', 
     'edit' => 'auth', 'update' => 'auth', 'destroy' => 'auth']);
+
+    Route::get('/language/{locale}', [LanguageController::class, 'switch'])
+    ->name('language.switch');
     
 Route::middleware('auth')->group(function () {
     Route::get('/items/{item}/request', [ExchangeRequestController::class, 'create'])

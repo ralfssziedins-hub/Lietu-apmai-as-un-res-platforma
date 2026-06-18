@@ -1,38 +1,68 @@
 <x-layout>
-    <x-slot name="title">Pievienot lietu</x-slot>
+    <x-slot name="title">
+        {{ __('messages.create_item') }}
+    </x-slot>
 
-    <h1>Pievienot lietu</h1>
+    <h1>{{ __('messages.create_item') }}</h1>
 
     <form method="POST" action="{{ route('items.store') }}">
         @csrf
 
         <div class="mb-3">
-            <label class="form-label">Nosaukums</label>
-            <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+            <label class="form-label">
+                {{ __('messages.title') }}
+            </label>
+
+            <input type="text"
+                   name="title"
+                   class="form-control"
+                   value="{{ old('title') }}">
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Apraksts</label>
-            <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+            <label class="form-label">
+                {{ __('messages.description') }}
+            </label>
+
+            <textarea name="description"
+                      class="form-control">{{ old('description') }}</textarea>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Veids</label>
+            <label class="form-label">
+                {{ __('messages.type') }}
+            </label>
+
             <select name="type" class="form-select">
-                <option value="rent">Īre</option>
-                <option value="exchange">Apmaiņa</option>
+                <option value="rent">
+                    {{ __('messages.rent') }}
+                </option>
+
+                <option value="exchange">
+                    {{ __('messages.exchange') }}
+                </option>
             </select>
         </div>
 
         <input type="hidden" name="status" value="available">
 
         <div class="mb-3" id="price-field">
-            <label class="form-label">Cena</label>
-            <input type="number" step="0.01" name="price" class="form-control" value="{{ old('price') }}">
+            <label class="form-label">
+                {{ __('messages.price') }}
+            </label>
+
+            <input type="number"
+                   step="0.01"
+                   name="price"
+                   class="form-control"
+                   value="{{ old('price') }}">
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Kategorija</label>
+            <label class="form-label">
+                {{ __('messages.category') }}
+            </label>
+
             <select name="category_id" class="form-select">
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}">
@@ -43,11 +73,12 @@
         </div>
 
         <button type="submit" class="btn btn-primary">
-            Saglabāt
+            {{ __('messages.save') }}
         </button>
     </form>
+
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
 
             const typeSelect = document.querySelector('[name="type"]');
             const priceField = document.getElementById('price-field');

@@ -5,23 +5,22 @@
 
     <p>{{ $item->description }}</p>
 
-    <p><strong>Kategorija:</strong> {{ $item->category->name }}</p>
-    <p><strong>Īpašnieks:</strong> {{ $item->user->name }}</p>
-    <p><strong>Veids:</strong> {{ $item->type }}</p>
-    <p><strong>Statuss:</strong> {{ $item->status }}</p>
-    
-        @if($item->type === 'rent')
+    <p><strong>{{ __('messages.category') }}:</strong> {{ $item->category->name }}</p>
+    <p><strong>{{ __('messages.owner') }}:</strong> {{ $item->user->name }}</p>
+    <p><strong>{{ __('messages.type') }}:</strong> {{ __('messages.'.$item->type) }}</p>
+    <p><strong>{{ __('messages.status') }}:</strong> {{ __('messages.'.$item->status) }}</p>
 
-            <p>
-                <strong>Cena:</strong>
-                {{ $item->price }} EUR
-            </p>
+    @if($item->type === 'rent')
+        <p>
+            <strong>{{ __('messages.price') }}:</strong>
+            {{ $item->price }} EUR
+        </p>
+    @endif
 
-        @endif
     @auth
         @if(auth()->user()->isAdmin() || auth()->id() === $item->user_id)
             <a href="{{ route('items.edit', $item) }}" class="btn btn-warning">
-                Rediģēt
+                {{ __('messages.edit') }}
             </a>
 
             <form method="POST" action="{{ route('items.destroy', $item) }}" class="mt-2">
@@ -29,22 +28,23 @@
                 @method('DELETE')
 
                 <button type="submit" class="btn btn-danger">
-                    Dzēst
+                    {{ __('messages.delete') }}
                 </button>
             </form>
         @endif
     @endauth
+
     @auth
         @if(auth()->id() !== $item->user_id && $item->status === 'available')
             <a href="{{ route('requests.create', $item) }}" class="btn btn-primary">
-                Nosūtīt pieprasījumu
+                {{ __('messages.send_request') }}
             </a>
         @endif
     @endauth
 
     @guest
         <a href="{{ route('login') }}" class="btn btn-primary">
-            Pieslēdzies, lai nosūtītu pieprasījumu
+            {{ __('messages.login_to_request') }}
         </a>
     @endguest
 </x-layout>

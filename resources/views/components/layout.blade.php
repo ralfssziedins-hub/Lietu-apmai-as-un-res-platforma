@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="lv">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Lietu apmaiņa un īre' }}</title>
+    <title>{{ $title ?? __('messages.app_name') }}</title>
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
@@ -13,54 +13,57 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
         <a class="navbar-brand" href="{{ route('items.index') }}">
-        Lietu apmaiņa un īre
+            {{ __('messages.app_name') }}
         </a>
 
         <div class="d-flex gap-2">
+            <a href="{{ route('language.switch', 'lv') }}" class="btn btn-outline-light">LV</a>
+            <a href="{{ route('language.switch', 'en') }}" class="btn btn-outline-light">EN</a>
+
             @guest
                 <a href="{{ route('login') }}" class="btn btn-outline-light">
-                    Pieslēgties
+                    {{ __('messages.login') }}
                 </a>
 
                 <a href="{{ route('register') }}" class="btn btn-success">
-                    Reģistrēties
+                    {{ __('messages.register') }}
                 </a>
             @endguest
 
-    @auth
+            @auth
+                <a href="{{ route('items.create') }}" class="btn btn-success">
+                    {{ __('messages.create_item') }}
+                </a>
 
-        <a href="{{ route('items.create') }}" class="btn btn-success">
-            Pievienot lietu
-        </a>
+                <a href="{{ route('requests.incoming') }}" class="btn btn-outline-light">
+                    {{ __('messages.incoming_requests') }}
+                </a>
 
-        <span class="navbar-text text-white">
-            {{ auth()->user()->name }}
-            @if(auth()->user()->isAdmin())
-                (Admin)
-            @else
-                (Lietotājs)
-            @endif
-        </span>
+                <a href="{{ route('requests.my') }}" class="btn btn-outline-light">
+                    {{ __('messages.my_requests') }}
+                </a>
 
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-danger">
-                Iziet
-            </button>
-        </form>
+                <a href="{{ route('profile') }}" class="btn btn-outline-light">
+                    {{ __('messages.profile') }}
+                </a>
 
-        <a href="{{ route('requests.incoming') }}" class="btn btn-outline-light">
-            Pieprasījumi
-        </a>
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('admin.index') }}" class="btn btn-outline-warning">
+                        {{ __('messages.admin') }}
+                    </a>
+                @endif
 
-        <a href="{{ route('requests.my') }}" class="btn btn-outline-light">
-            Mani pieprasījumi
-        </a>
+                <span class="navbar-text text-white">
+                    {{ auth()->user()->name }}
+                </span>
 
-        <a href="{{ route('profile') }}" class="btn btn-outline-light">
-            Mans profils
-        </a>
-    @endauth
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">
+                        {{ __('messages.logout') }}
+                    </button>
+                </form>
+            @endauth
         </div>
     </div>
 </nav>
@@ -82,13 +85,11 @@
         </div>
     @endif
 
-    @auth
-        @if(auth()->user()->isAdmin())
-            <a href="{{ route('admin.index') }}" class="btn btn-outline-warning">
-                Admin panelis
-            </a>
-        @endif
-    @endauth
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
     {{ $slot }}
 </main>

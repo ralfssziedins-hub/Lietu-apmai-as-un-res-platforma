@@ -1,10 +1,10 @@
 <x-layout>
 
     <x-slot name="title">
-        Atsauksme
+        {{ __('messages.review') }}
     </x-slot>
 
-    <h1>Atstāt atsauksmi</h1>
+    <h1>{{ __('messages.leave_review') }}</h1>
 
     <form method="POST"
           action="{{ route('reviews.store', $requestModel) }}">
@@ -14,7 +14,7 @@
         <div class="mb-3">
 
             <label class="form-label">
-                Vērtējums
+                {{ __('messages.rating') }}
             </label>
 
             <select name="rating" class="form-select">
@@ -32,7 +32,7 @@
         <div class="mb-3">
 
             <label class="form-label">
-                Atsauksme
+                {{ __('messages.review') }}
             </label>
 
             <textarea name="text"
@@ -42,7 +42,7 @@
         </div>
 
         <button class="btn btn-primary">
-            Saglabāt
+            {{ __('messages.save') }}
         </button>
 
     </form>
